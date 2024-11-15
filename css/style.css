@@ -1,0 +1,439 @@
+/* CSS dasar tetap sama seperti sebelumnya */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    background: #1d1d1d;
+    overflow-x: hidden;
+}
+
+/* Bagian Header */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between; /* Elemen header disebar antara logo dan nav */
+    align-items: center;
+    padding: 15px;
+}
+
+/* Pastikan logo tetap satu baris dengan menu */
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    flex: 1;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex; /* Menjaga elemen navigasi dalam satu baris */
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.nav-links li a:hover {
+    color: #1e90ff;
+}
+
+/* Media Query: Agar tetap satu baris di layar kecil */
+@media (max-width: 768px) {
+    .nav-links {
+        flex: 2;
+        justify-content: flex-end;
+    }
+    .logo {
+        flex: 1;
+    }
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    animation: fadeIn 2s ease;
+}
+
+.hero-content {
+    text-align: center;
+    color: #fff;
+}
+
+.hero h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero .highlight {
+    background: linear-gradient(45deg, #6bc9ff, #a8f2f7, #7bcfff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.hero .btn {
+    padding: 10px 20px;
+    background-color: #1e90ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.hero .btn:hover {
+    background-color: #fff;
+    color: #1e90ff;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 20px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    animation: scrollDown 2s infinite;
+}
+
+@keyframes scrollDown {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+    100% { transform: translateY(0); }
+}
+
+/* About Section */
+.about {
+    padding: 100px 50px;
+    background: linear-gradient(45deg, #283593, #1E88E5);
+    text-align: center;
+}
+
+.about h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.about p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.gif-container {
+    width: 200px; /* Atur lebar sesuai kebutuhan */
+    height: 200px; /* Atur tinggi sesuai kebutuhan */
+    margin: 20px auto; /* Mengatur margin untuk pusat */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2); /* Warna latar belakang transparan untuk melihat efek */
+    border-radius: 10px; /* Menambahkan sudut melengkung */
+    overflow: hidden; /* Menjaga agar konten tidak keluar dari area */
+}
+
+.gif {
+    width: 100%; /* Memastikan GIF mengisi container */
+    height: auto; /* Menjaga proporsi */
+}
+
+/* Projects Section */
+.projects {
+    padding: 100px 50px;
+    background-color: #333;
+}
+
+.projects h2 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.project-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #444;
+    padding: 20px;
+    width: 300px;
+    margin: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 16px;
+}
+
+/* Contact Section */
+.contact {
+    padding: 100px 50px;
+    background-color: #282828;
+    text-align: center;
+}
+
+.contact h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.contact p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.contact ul {
+    list-style: none;
+}
+
+.contact ul li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.contact ul li a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+/* Footer */
+.footer {
+    padding: 20px 0;
+    background-color: #000;
+    text-align: center;
+}
+
+/* Media Queries untuk Responsivitas */
+@media (max-width: 1200px) {
+    .hero h2 {
+        font-size: 40px;
+    }
+    .hero p {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .hero h2 {
+        font-size: 36px;
+    }
+    .hero p {
+        font-size: 18px;
+    }
+    .nav-links {
+        display: block;
+    }
+    .nav-links li {
+        margin: 10px 0;
+    }
+    .project-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        width: 90%;
+    }
+}
+
+@media (max-width: 500px) {
+    .hero-content {
+        padding: 0 20px;
+    }
+    .hero h2 {
+        font-size: 32px;
+    }
+    .hero p {
+        font-size: 16px;
+    }
+    .nav-links {
+        display: block;
+    }
+    .header {
+        padding: 20px;
+    }
+    .logo {
+        font-size: 20px;
+    }
+    .hero .btn {
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h2 {
+        font-size: 28px;
+    }
+    .hero p {
+        font-size: 14px;
+    }
+    .about h2, .projects h2, .contact h2 {
+        font-size: 28px;
+    }
+    .hero .btn {
+        padding: 6px 12px;
+    }
+}
+
+/* Animasi masuk ketika scroll */
+.section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Efek Hover pada Card */
+.card {
+    background-color: #444;
+    padding: 20px;
+    width: 300px;
+    margin: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Gaya Hover pada Tombol */
+.hero .btn {
+    padding: 10px 20px;
+    background-color: #1e90ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(30, 144, 255, 0.3);
+}
+
+.hero .btn:hover {
+    background-color: #fff;
+    color: #1e90ff;
+    box-shadow: 0 10px 30px rgba(30, 144, 255, 0.5);
+}
+
+/* Gaya untuk Judul */
+h2 {
+    font-family: 'Arial Black', sans-serif;
+    letter-spacing: 2px;
+    color: #fff;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+h2:after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #1e90ff;
+    margin: 10px auto 0;
+}
+.star {
+    position: absolute;
+    width: 5px; /* Ukuran bintang */
+    height: 5px; /* Ukuran bintang */
+    background-color: #fff; /* Warna bintang */
+    border-radius: 50%;
+    opacity: 0; /* Awalnya tidak terlihat */
+    animation: fall 2s infinite; /* Mengatur animasi jatuh */
+}
+
+/* Animasi jatuh */
+@keyframes fall {
+    0% {
+        transform: translateY(1000vh); /* Memulai di atas layar */
+        transform: translateX(10vh);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5; /* Bintang memudar saat jatuh */
+    }
+    100% {
+        transform: translateY(100vh); /* Mengakhiri di bawah layar */
+        opacity: 0; /* Menghilang saat mencapai bawah */
+    }
+}
+
+/* Aturan untuk mengacak posisi bintang */
+.star:nth-child(1) { left: 10%; animation-delay: 2s; }
+.star:nth-child(2) { left: 30%; animation-delay: 2s; }
+.star:nth-child(3) { left: 50%; animation-delay: 1s; }
+.star:nth-child(4) { left: 70%; animation-delay: 1.5s; }
+.star:nth-child(5) { left: 90%; animation-delay: 2s; }
+.star:nth-child(6) { left: 15%; animation-delay: 0.5s; }
+.star:nth-child(7) { left: 35%; animation-delay: 1.5s; }
+.star:nth-child(8) { left: 55%; animation-delay: 2.5s; }
+
+.project-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+    padding: 20px;
+    background: linear-gradient(to bottom, #ffffff3d, #ffffff59, #ffffff49);
+    border-radius: 10px;
+    
+}
+
+.card {
+    background: linear-gradient(to top, #1e1e2f, #0d1b2a, #0a0c14);
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.7);
+}
