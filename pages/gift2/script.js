@@ -17,71 +17,63 @@ class Paper {
 
   init(paper) {
     // Event untuk perangkat desktop
-    document.addEventListener('mousemove', this.handleMove.bind(this, paper));
-    paper.addEventListener('mousedown', this.handleStart.bind(this, paper));
-    window.addEventListener('mouseup', this.handleEnd.bind(this));
+    paper.addEventListener('mousedown', (e) => this.handleStart(e, paper));
+    document.addEventListener('mousemove', (e) => this.handleMove(e, paper));
+    window.addEventListener('mouseup', () => this.handleEnd());
 
     // Event untuk perangkat sentuh
-    document.addEventListener('touchmove', this.handleTouchMove.bind(this, paper), { passive: false });
-    paper.addEventListener('touchstart', this.handleTouchStart.bind(this, paper));
-    window.addEventListener('touchend', this.handleEnd.bind(this));
+    paper.addEventListener('touchstart', (e) => this.handleStart(e, paper));
+    document.addEventListener('touchmove', (e) => this.handleMove(e, paper), { passive: false });
+    window.addEventListener('touchend', () => this.handleEnd());
   }
 
-  handleMove(paper, e) {
-    if (!this.rotating) {
-      this.mouseX = e.clientX;
-      this.mouseY = e.clientY;
-      this.updatePaperPosition(paper);
-    }
-  }
+  handleStart(e, paper) {
+    e.preventDefault();
 
-  handleStart(paper, e) {
-    if (this.holdingPaper) return;
+    // Tangkap posisi awal
+    const touch = e.touches ? e.touches[0] : e; // Tangkap input dari mouse atau layar sentuh
+    this.mouseTouchX = touch.clientX;
+    this.mouseTouchY = touch.clientY;
+    this.prevMouseX = touch.clientX;
+    this.prevMouseY = touch.clientY;
+
     this.holdingPaper = true;
 
+    // Atur z-index agar elemen teratas
     paper.style.zIndex = highestZ;
     highestZ += 1;
 
-    if (e.button === 0 || e.type === 'touchstart') {
-      const touch = e.touches ? e.touches[0] : e;
-      this.mouseTouchX = touch.clientX;
-      this.mouseTouchY = touch.clientY;
-      this.prevMouseX = touch.clientX;
-      this.prevMouseY = touch.clientY;
-    }
+    // Deteksi rotasi jika klik kanan (desktop)
     if (e.button === 2) {
       this.rotating = true;
     }
   }
 
-  handleTouchStart(paper, e) {
-    e.preventDefault(); // Mencegah gesekan layar default
-    this.handleStart(paper, e);
-  }
+  handleMove(e, paper) {
+    if (!this.holdingPaper) return;
 
-  handleTouchMove(paper, e) {
-    e.preventDefault(); // Mencegah gesekan layar default
-    const touch = e.touches[0];
+    e.preventDefault();
+
+    // Tangkap posisi saat ini
+    const touch = e.touches ? e.touches[0] : e; // Tangkap input dari mouse atau layar sentuh
     this.mouseX = touch.clientX;
     this.mouseY = touch.clientY;
-    this.updatePaperPosition(paper);
-  }
 
-  updatePaperPosition(paper) {
-    if (this.holdingPaper) {
-      if (!this.rotating) {
-        this.velX = this.mouseX - this.prevMouseX;
-        this.velY = this.mouseY - this.prevMouseY;
+    if (!this.rotating) {
+      // Hitung perpindahan posisi
+      this.velX = this.mouseX - this.prevMouseX;
+      this.velY = this.mouseY - this.prevMouseY;
 
-        this.currentPaperX += this.velX;
-        this.currentPaperY += this.velY;
+      this.currentPaperX += this.velX;
+      this.currentPaperY += this.velY;
 
-        this.prevMouseX = this.mouseX;
-        this.prevMouseY = this.mouseY;
-      }
-
-      paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+      // Simpan posisi sebelumnya
+      this.prevMouseX = this.mouseX;
+      this.prevMouseY = this.mouseY;
     }
+
+    // Terapkan posisi dan rotasi pada elemen
+    paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
   }
 
   handleEnd() {
