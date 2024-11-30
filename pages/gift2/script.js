@@ -1,68 +1,45 @@
 let highestZ = 1;
 
-class Paper {
-  constructor(paper) {
-    this.paper = paper;
-    this.holding = false;
-    this.startX = 0;
-    this.startY = 0;
-    this.offsetX = 0;
-    this.offsetY = 0;
-    this.rotation = Math.random() * 30 - 15;
+document.querySelectorAll(".paper").forEach((paper) => {
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let currentX = 0;
+  let currentY = 0;
 
-    this.init();
-  }
-
-  init() {
-    // Event untuk desktop
-    this.paper.addEventListener('mousedown', this.start.bind(this));
-    document.addEventListener('mousemove', this.move.bind(this));
-    document.addEventListener('mouseup', this.end.bind(this));
-
-    // Event untuk layar sentuh
-    this.paper.addEventListener('touchstart', this.start.bind(this), { passive: false });
-    document.addEventListener('touchmove', this.move.bind(this), { passive: false });
-    document.addEventListener('touchend', this.end.bind(this));
-  }
-
-  start(e) {
+  const startDrag = (e) => {
     e.preventDefault();
 
-    const isTouch = e.type === 'touchstart';
-    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+    const touch = e.type === "touchstart" ? e.touches[0] : e;
+    startX = touch.clientX - currentX;
+    startY = touch.clientY - currentY;
+    isDragging = true;
 
-    this.startX = clientX - this.offsetX;
-    this.startY = clientY - this.offsetY;
-    this.holding = true;
-
-    // Tingkatkan z-index elemen yang dipegang
-    this.paper.style.zIndex = highestZ;
+    paper.style.zIndex = highestZ;
     highestZ++;
-  }
+  };
 
-  move(e) {
-    if (!this.holding) return;
+  const onDrag = (e) => {
+    if (!isDragging) return;
 
-    e.preventDefault();
+    const touch = e.type === "touchmove" ? e.touches[0] : e;
+    currentX = touch.clientX - startX;
+    currentY = touch.clientY - startY;
 
-    const isTouch = e.type === 'touchmove';
-    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+    paper.style.transform = `translate(${currentX}px, ${currentY}px)`;
+  };
 
-    this.offsetX = clientX - this.startX;
-    this.offsetY = clientY - this.startY;
+  const stopDrag = () => {
+    isDragging = false;
+  };
 
-    // Terapkan transformasi posisi dan rotasi
-    this.paper.style.transform = `translate(${this.offsetX}px, ${this.offsetY}px) rotate(${this.rotation}deg)`;
-  }
+  // Event untuk desktop
+  paper.addEventListener("mousedown", startDrag);
+  document.addEventListener("mousemove", onDrag);
+  document.addEventListener("mouseup", stopDrag);
 
-  end() {
-    this.holding = false;
-  }
-}
-
-// Inisialisasi untuk semua elemen dengan kelas .paper
-document.querySelectorAll('.paper').forEach((paper) => {
-  new Paper(paper);
+  // Event untuk perangkat sentuh
+  paper.addEventListener("touchstart", startDrag, { passive: false });
+  document.addEventListener("touchmove", onDrag, { passive: false });
+  document.addEventListener("touchend", stopDrag);
 });
